@@ -26,8 +26,27 @@ const ProductPage = () => {
         fetchProduct();
     }, [id]);
 
+    const deleteProduct = async (productId) => {
+        const confirm = window.confirm("Do you want to delete?");
+        if (!confirm) return;
+        try {
+            const res = await fetch(`/api/products/${productId}`, {
+                method: "DELETE",
+            }
+        );
+        navigate("/");
+            if (!res.ok) throw new Error("failed to delete");
+
+        }catch (error) {
+            console.error("Error when deleting:", error);
+            setError(error.message)
+        }
+    };
+
     if (ispending) return <p>Loading...</p>
     if (error) return <p>{error}</p>
+
+    
 
     return (
     <div className="product-details">
@@ -43,6 +62,7 @@ const ProductPage = () => {
       <p>Verified: {product.supplier.isVerified ? "Yes" : "No"}</p>
 
       <button onClick={()=> navigate("/") }>Back</button>
+      <button onClick={() => deleteProduct(product._id)}>Delete</button>
     </div>
   );
 };
