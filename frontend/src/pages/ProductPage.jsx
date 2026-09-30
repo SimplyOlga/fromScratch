@@ -5,9 +5,9 @@ const ProductPage = () => {
 
     const {id} = useParams();
     const navigate = useNavigate();
-    const [product, setProduct] = useState("");
-    // const [ispending, setIsPending ] = useState("");
-    const [error, setError] = useState("");
+    const [product, setProduct] = useState(null);
+    const [ispending, setIsPending ] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -16,18 +16,18 @@ const ProductPage = () => {
                 if(!res.ok) throw new Error("Product not found");
                 const data = await res.json();
                 setProduct(data);
-                // console.log("set")
             } catch (error) {
-                // console.log("error")
                 setError(error.message);
+            } finally {
+                setIsPending(false)
             }
         };
 
         fetchProduct();
     }, [id]);
 
-
-    // if (error) return <p>{error}</p>
+    if (ispending) return <p>Loading...</p>
+    if (error) return <p>{error}</p>
 
     return (
     <div className="product-details">
@@ -40,7 +40,7 @@ const ProductPage = () => {
       <p>Supplier Name: {product.supplier.name}</p>
       <p>Contact Email: {product.supplier.contactEmail}</p>
       <p>Contact Phone: {product.supplier.contactPhone}</p>
-      <p>Verified: {product.supplier.isVerified}</p>
+      <p>Verified: {product.supplier.isVerified ? "Yes" : "No"}</p>
 
       <button onClick={()=> navigate("/") }>Back</button>
     </div>
