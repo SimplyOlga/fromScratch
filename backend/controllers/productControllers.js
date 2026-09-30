@@ -21,8 +21,27 @@ const getAllProduct = async (req, res) => {
     }
 };
 
+const deleteProduct = async (req, res) => {
+    
+        const { productId } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(productId)) {
+            return res.status(400).json({message: "invalud ID"});
+        }
+        try {
+            const deletedProduct = await Product.findOneAndDelete({_id: productId});
+            if (deletedProduct) {
+                res.status(204).send();
+            } else {
+                res.status(404).json({message: "Product not found"});
+            }
+        } catch (error) {
+            res.status(500).json({message: "Failed to delete"})
+        }
+    };
+
 
 module.exports = {
     createProduct,
-    getAllProduct
+    getAllProduct,
+    deleteProduct,
 };
