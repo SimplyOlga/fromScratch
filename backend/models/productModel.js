@@ -12,7 +12,10 @@ const productSchema = new mongoose.Schema({
         contactPhone: { type: String, required: true}, 
         isVerified: {type: Boolean, default: false, required: true}
     },
-    
+    user_id: {type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+    }
 }, {timestamps: true}
 )
 

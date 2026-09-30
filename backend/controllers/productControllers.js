@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 
 const createProduct = async (req, res) => {
     try { 
-        const newProduct = await Product.create({...req.body});
+        const userId = req.user._id;
+        const newProduct = new Product({...req.body, userId});
         res.status(201).json(newProduct);
 
     } catch (error) {
@@ -67,7 +68,7 @@ const updateProduct = async (req, res) => {
             {new: true}
         );
         if (updatedProduct) {
-            res.status(200).json(updateProduct);
+            res.status(200).json(updatedProduct);
         } else {
             res.status(400).json({ message: "Product not found"});
         }
