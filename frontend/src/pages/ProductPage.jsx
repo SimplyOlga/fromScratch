@@ -43,6 +43,7 @@ const ProductPage = () => {
         }
     };
 
+
     if (ispending) return <p>Loading...</p>
     if (error) return <p>{error}</p>
 
@@ -63,6 +64,7 @@ const ProductPage = () => {
 
       <button onClick={()=> navigate("/") }>Back</button>
       <button onClick={() => deleteProduct(product._id)}>Delete</button>
+      <button onClick={() => navigate(`/edit/${product._id}`)}>Edit</button>
     </div>
   );
 };
