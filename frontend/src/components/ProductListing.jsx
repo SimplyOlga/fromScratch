@@ -1,15 +1,15 @@
-const ProductListing = () => {
+const ProductListing = ({ product }) => {
   return (
     <div className="product-preview">
-      <h2>Product :</h2>
-      <p>Category: </p>
-      <p>Description:</p>
-      <p>Price:</p>
-      <p>Inventory Count:</p>
-      <p>Supplier Name:</p>
-      <p>Contact Email:</p>
-      <p>Contact Phone:</p>
-      <p>Verified:</p>
+      <h2>Product : {product.productName}</h2>
+      <p>Category: {product.category}</p>
+      <p>Description: {product.description}</p>
+      <p>Price: {product.price}</p>
+      <p>Inventory Count: {product.inventoryCount}</p>
+      <p>Supplier Name: {product.supplier.name}</p>
+      <p>Contact Email: {product.supplier.contactEmail}</p>
+      <p>Contact Phone: {product.supplier.contactPhone}</p>
+      <p>Verified: {product.supplier.isVerified}</p>
     </div>
   );
 };
