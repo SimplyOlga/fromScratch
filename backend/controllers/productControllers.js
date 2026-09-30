@@ -12,6 +12,17 @@ const createProduct = async (req, res) => {
     }
 };
 
+const getAllProduct = async (req, res) => {
+    try {
+        const products = await Product.find({}).sort({ createdAt: -1})
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to get all products"});
+    }
+};
+
+
 module.exports = {
-    createProduct
+    createProduct,
+    getAllProduct
 };
