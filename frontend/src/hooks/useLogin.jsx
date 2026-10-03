@@ -8,9 +8,9 @@ export function useLogin(url) {
         try {
             const response = await fetch(url, 
                 { method: "POST", headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
+                body: JSON.stringify(
                     userdata
-                }),
+                ),
                         
                 });
                 const user = await response.json();
@@ -20,7 +20,7 @@ export function useLogin(url) {
                     return;
                 }
                 localStorage.setItem("user", JSON.stringify(user));
-                setIsAuthenticated(true);
+                
                 console.log("yay");
                 navigate("/")
         } catch (error) {

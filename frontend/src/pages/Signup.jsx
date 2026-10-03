@@ -26,7 +26,7 @@ const Signup = ({ setIsAuthenticated }) => {
             phoneNumber: phoneNumber.value, date_of_birth: DateOfBirth.value, accountType: accountType.value
         });
         if (data) {
-            //setIsAuthenticated(true);
+            setIsAuthenticated(true);
             navigate("/")
         }
        

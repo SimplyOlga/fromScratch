@@ -20,7 +20,7 @@ export function useSignup(url) {
                     return;
                 }
                 localStorage.setItem("user", JSON.stringify(user));
-                setIsAuthenticated(true);
+                
                 console.log("yay");
                 navigate("/")
         } catch (error) {
