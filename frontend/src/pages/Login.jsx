@@ -1,44 +1,32 @@
 import {useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { useField } from "../hooks/useField";
+import { useLogin } from "../hooks/useLogin";
 
 
 
 const Login = ({ setIsAuthenticated }) => {
 
    
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+   const email = useField("email");
+   const password = useField("password");
+   const {error, login} = useLogin("/api/users/login")
     const navigate = useNavigate();
    
 
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        setError(null);
-
-
-        try {
-            const response = await fetch("/api/users/login", 
-                { method: "POST", headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    email, password
-                }),
-                        
-                });
-                const user = await response.json();
-                if (!response.ok) {
-                    console.log("no")
-                    setError(user.error);
-                    return;
-                }
-                localStorage.setItem("user", JSON.stringify(user));
-                setIsAuthenticated(true)
-                console.log("yay login");
-                navigate("/")
-        } catch (error) {
-            console.error(error)
+        
+        const data = await login({
+            email: email.value, password: password.value
+        });
+        if (data) {
+            setIsAuthenticated(true);
+            navigate("/");
         }
+
+       
     }
 
     return (
@@ -47,9 +35,9 @@ const Login = ({ setIsAuthenticated }) => {
             <form onSubmit={onSubmit}>
                 
                 <label>Email:</label>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input {...email} />
                 <label>Password:</label>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input {...password} />
                 
                 <button>Login</button>
                 {error && <p className="error">{error}</p>}
