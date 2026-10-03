@@ -6,6 +6,7 @@ export function useSignup(url) {
 
     const signup = async (userdata) => {
         try {
+            setError(null);
             const response = await fetch(url, 
                 { method: "POST", headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(
@@ -15,12 +16,11 @@ export function useSignup(url) {
                 });
                 const user = await response.json();
                 if (!response.ok) {
-                    console.log("no")
-                    setError(user.error);
-                    return;
+                    throw new Error(user.message || user.error)
+                    
                 }
                 localStorage.setItem("user", JSON.stringify(user));
-                
+                return user;
                 console.log("yay");
                 navigate("/")
         } catch (error) {

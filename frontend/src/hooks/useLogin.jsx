@@ -17,12 +17,12 @@ export function useLogin(url) {
                 if (!response.ok) {
                     console.log("no")
                     setError(user.error);
-                    return;
+                    return user;
                 }
                 localStorage.setItem("user", JSON.stringify(user));
                 
                 console.log("yay");
-                navigate("/")
+                
         } catch (error) {
             setError(error.message)
         }

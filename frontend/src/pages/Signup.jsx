@@ -14,7 +14,7 @@ const Signup = ({ setIsAuthenticated }) => {
     const gender = useField("text");
     const phoneNumber = useField("tel");
     const DateOfBirth = useField("date");
-    const accountType = useField("text");
+    const accountType = useField("text", "Inactive");
     const navigate = useNavigate();
     const {signup, error} = useSignup('/api/users/signup');
 
