@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Signup = () => {
+const Login = ({ setIsAuthenticated }) => {
 
    
     const [email, setEmail] = useState("");
@@ -33,6 +33,7 @@ const Signup = () => {
                     return;
                 }
                 localStorage.setItem("user", JSON.stringify(user));
+                setIsAuthenticated(true)
                 console.log("yay login");
                 navigate("/")
         } catch (error) {
@@ -58,4 +59,4 @@ const Signup = () => {
 
 };
 
-export default Signup;
+export default Login;

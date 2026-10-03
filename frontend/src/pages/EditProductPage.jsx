@@ -41,9 +41,12 @@ const EditProductPage = () => {
     }, [id] );
 
     const updateProduct = async (product) => {
+        const user = JSON.parse(localStorage.getItem("user"));
         const res = await fetch(`/api/products/${id}`, {
             method: 'PUT',
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json",
+                Authorization: `Bearer ${user?.token}`
+            },
             body: JSON.stringify(product),
         });
 

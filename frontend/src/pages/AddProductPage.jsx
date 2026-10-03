@@ -17,9 +17,15 @@ const AddProductPage = () => {
     const navigate = useNavigate();
 
     const addProduct = async (newProduct) => {
+
+        const user = JSON.parse(localStorage.getItem("user"));
+        const token = user ? user.token : null;
+        
         const res = await fetch("/api/products", {
             method: 'POST',
-            headers: {"Content-Type": "application/json" },
+            headers: {"Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+             },
             body: JSON.stringify(newProduct),
         });
 

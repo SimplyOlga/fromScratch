@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const ProductPage = () => {
+const ProductPage = ({ isAuthenticated }) => {
 
     const {id} = useParams();
     const navigate = useNavigate();
@@ -27,11 +27,15 @@ const ProductPage = () => {
     }, [id]);
 
     const deleteProduct = async (productId) => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const token = user ? user.token : null;
+
         const confirm = window.confirm("Do you want to delete?");
         if (!confirm) return;
         try {
             const res = await fetch(`/api/products/${productId}`, {
                 method: "DELETE",
+                headers: {Authorization: `Bearer ${token}`},
             }
         );
         navigate("/");
@@ -63,8 +67,14 @@ const ProductPage = () => {
       <p>Verified: {product.supplier.isVerified ? "Yes" : "No"}</p>
 
       <button onClick={()=> navigate("/") }>Back</button>
-      <button onClick={() => deleteProduct(product._id)}>Delete</button>
-      <button onClick={() => navigate(`/edit/${product._id}`)}>Edit</button>
+
+      {isAuthenticated && (
+        <>
+    <button onClick={() => deleteProduct(product._id)}>Delete</button>
+    <button onClick={() => navigate(`/edit/${product._id}`)}>Edit</button>
+        </>
+      )}
+
     </div>
   );
 };

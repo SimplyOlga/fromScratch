@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Signup = () => {
+const Signup = ({ setIsAuthenticated }) => {
 
     const [fullName, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -36,6 +36,7 @@ const Signup = () => {
                     return;
                 }
                 localStorage.setItem("user", JSON.stringify(user));
+                setIsAuthenticated(true);
                 console.log("yay");
                 navigate("/")
         } catch (error) {
@@ -60,7 +61,7 @@ const Signup = () => {
                 <label>Date of birth:</label>
                 <input type="date" value={DateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
                 <label>Account type:</label>
-                <select value={accountType} onChange={(e) => setAccountType(e.target.value === "true")}>
+                <select value={accountType} onChange={(e) => setAccountType(e.target.value)}>
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
                 </select>
